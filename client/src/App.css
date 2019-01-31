@@ -5,12 +5,20 @@
 }
 
 .App-header {
+  z-index: 9999;
   background-color: #1f6bff;
-  min-height: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  justify-content: center;
+  padding: 20px;
+  top: 0;
   color: white;
-  padding-bottom: 10px;
+  text-align: left;
+  position: fixed;
+  width: 100%;
+}
+
+.container-main {
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-top: 100px;
+  font-size: large;
+  padding-bottom: 100px;
 }

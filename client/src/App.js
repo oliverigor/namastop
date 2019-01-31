@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import logoNovatics from "./Marca_Novatics_negativo.png";
-import { Col, Container, Row } from "react-materialize";
+import { Container, Row } from "react-materialize";
 import "./App.css";
+import jsonData from "./quotes";
 
 import CardQuotes from "./CardQuotes";
 
@@ -10,7 +11,7 @@ class App extends Component {
     response: "",
     post: "",
     responseToPost: "",
-    data: null
+    data: jsonData
   };
 
   componentDidMount() {
@@ -47,7 +48,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <div>
-            <img src={logoNovatics} alt="logo" />
+            <img src={logoNovatics} alt="logo" height={30} />
           </div>
         </header>
         {/*<p>{this.state.response}</p>
@@ -63,13 +64,19 @@ class App extends Component {
           <button type="submit">Submit</button>
         </form>
         <p>{this.state.responseToPost}</p>*/}
-        <Container>
-          <Row>
-            <Col m={4} s={12}>
-              <CardQuotes />
-            </Col>
-          </Row>
-        </Container>
+        <div className="container-main">
+          <Container>
+            <Row>
+              {this.state.data ? (
+                this.state.data.map(quotes => (
+                  <CardQuotes key={quotes._id} quotes={quotes} />
+                ))
+              ) : (
+                <p>loading...</p>
+              )}
+            </Row>
+          </Container>
+        </div>
       </div>
     );
   }
