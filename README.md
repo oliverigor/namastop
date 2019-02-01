@@ -29,3 +29,23 @@ Running the production build on localhost. This will create a production build, 
 ```
 NODE_ENV=production yarn dev:server
 ```
+
+## Future Work
+
+Help us improve this amazing system! Some features that could be implemented in future work:
+
+Real time update
+Use a firebase function for update news namastops in real time
+
+```
+Filter system
+Filter the messages by author and by channel
+```
+
+Interaction with bot
+Create an interaction with the namastop bot
+
+```
+Improve tests
+Tests are never enough.
+```

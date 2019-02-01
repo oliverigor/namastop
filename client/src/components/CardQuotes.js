@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Card, Col } from "react-materialize";
 import "./App.css";
-import logoNovatics from "./Marca_Novatics_negativo.png";
+import logoNovatics from "../images/Marca_Novatics_negativo.png";
 
 class CardQuotes extends Component {
 	render() {

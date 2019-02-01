@@ -36,10 +36,10 @@ app.get("/api/posts", (req, res) => {
 				user: oldPosts[i].user
 			});
 		}
-		console.log({ newState: newState });
+		// console.log({ newState: newState });
 		newStateOut = newState;
 	});
-	console.log({ newStateOut: newStateOut });
+	// console.log({ newStateOut: newStateOut });
 	res.send(newStateOut);
 });
 

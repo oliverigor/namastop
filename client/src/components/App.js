@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import logoNovatics from "./Marca_Novatics_negativo.png";
+import logoNovatics from "../images/Marca_Novatics_negativo.png";
 import { Container, Row, Button } from "react-materialize";
 import "./App.css";
-import jsonData from "./quotes";
-import "./bubbleloading.css";
 
 import CardQuotes from "./CardQuotes";
 
@@ -12,8 +10,7 @@ class App extends Component {
     response: "",
     posts: "",
     responseToPost: "",
-    data: jsonData,
-    dataAPI: null
+    dataA: null
   };
 
   componentDidMount() {
@@ -24,31 +21,27 @@ class App extends Component {
 
   callApi = async () => {
     const response = await fetch("/api/posts");
-    const body = await response.json();
 
+    const body = await response.json();
+    this.setState({ data: body });
     if (response.status !== 200) throw Error(body.message);
 
     return body;
   };
 
   handleNewQuotes = async () => {
-    console.log("entrei aqui");
     const response = await fetch("/api/posts", {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
       }
     });
-    const body = await response.text();
-    console.log({ body: body });
+    const body = await response.json();
 
-    this.setState({ dataAPI: JSON.parse(body) });
-
-    // const post = this.state.dataAPI;
+    this.setState({ data: body });
   };
 
   render() {
-    console.log(this.state.dataAPI);
     return (
       <div className="App">
         <header className="App-header">
@@ -59,32 +52,23 @@ class App extends Component {
         <div className="container-main">
           <Container>
             <Row>
-              {this.state.dataAPI ? (
-                this.state.dataAPI.map(quotes => (
+              {this.state.data ? (
+                this.state.data.map(quotes => (
                   <CardQuotes key={quotes.id} quotes={quotes} />
                 ))
               ) : (
-                // <div class="container-bubble">
-                //   <div class="circle circle1" />
-                //   <div class="circle circle2" />
-                //   <div class="circle circle3" />
-                //   <div class="circle big" />
-                //   <div class="circle circle4" />
-                //   <div class="circle circle5" />
-                //   <div class="circle circle6" />
-                //   <div class="circle circle7" />
-                // </div>
                 <p>loading...</p>
               )}
             </Row>
             <Button
-              floating
               large
               className="blue"
               waves="light"
-              icon="add"
               onClick={() => this.handleNewQuotes()}
-            />
+            >
+              {" "}
+              + menções?
+            </Button>
           </Container>
         </div>
       </div>

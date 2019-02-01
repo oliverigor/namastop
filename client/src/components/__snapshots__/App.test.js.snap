@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render correctly 1`] = `
+<Col
+  m={4}
+  s={12}
+>
+  <Card
+    className="small"
+    textClassName="black-text align-left"
+  >
+    <div
+      className="card-image-override"
+    >
+      <img
+        alt="foto-bonita"
+        className="image-override"
+        src="Marca_Novatics_negativo.png"
+      />
+    </div>
+    <div
+      className="card-title"
+    >
+      igor
+    </div>
+    <div
+      className="card-stacked"
+    >
+      <div
+        className="card-content"
+      >
+        <p>
+          falavei
+        </p>
+      </div>
+    </div>
+  </Card>
+</Col>
+`;
