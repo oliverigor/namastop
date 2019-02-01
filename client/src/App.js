@@ -1,23 +1,51 @@
 import React, { Component } from "react";
 import logoNovatics from "./Marca_Novatics_negativo.png";
-import { Container, Row } from "react-materialize";
+import { Container, Row, Button } from "react-materialize";
 import "./App.css";
 import jsonData from "./quotes";
+import firebase from "./firebase";
 
 import CardQuotes from "./CardQuotes";
 
 class App extends Component {
   state = {
     response: "",
-    post: "",
+    posts: "",
     responseToPost: "",
-    data: jsonData
+    data: jsonData,
+    dataAPI: null
   };
 
   componentDidMount() {
     this.callApi()
       .then(res => this.setState({ response: res.express }))
       .catch(err => console.log(err));
+
+    const oldPosts = firebase.database().ref("post");
+    oldPosts.on(
+      "value",
+      snapshot => {
+        let newState = [];
+        var oldPosts = snapshot.val();
+        for (let i in oldPosts) {
+          oldPosts[i].map(aqui => {
+            newState.push({
+              id: aqui.id,
+              message: aqui.message,
+              user: aqui.user
+            });
+            return this.setState({
+              posts: newState,
+              dataAPI: newState
+            });
+          });
+        }
+      },
+      function(error) {
+        console.log("Error: " + error.code);
+      }
+    );
+    // console.log({ oldPosts: oldPosts });
   }
 
   callApi = async () => {
@@ -29,18 +57,21 @@ class App extends Component {
     return body;
   };
 
-  handleSubmit = async e => {
-    e.preventDefault();
-    const response = await fetch("/api/world", {
-      method: "POST",
+  handleNewQuotes = async () => {
+    console.log("entrei aqui");
+    const response = await fetch("/api/hello", {
+      method: "GET",
       headers: {
         "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ post: this.state.post })
+      }
+      // body: JSON.stringify({ posts: this.state.posts })
     });
     const body = await response.text();
 
-    this.setState({ responseToPost: body });
+    this.setState({ dataAPI: JSON.parse(body) });
+    const post = this.state.dataAPI;
+    const itemsRef = firebase.database().ref("post");
+    itemsRef.push(post);
   };
 
   render() {
@@ -67,14 +98,22 @@ class App extends Component {
         <div className="container-main">
           <Container>
             <Row>
-              {this.state.data ? (
-                this.state.data.map(quotes => (
-                  <CardQuotes key={quotes._id} quotes={quotes} />
+              {this.state.dataAPI ? (
+                this.state.dataAPI.map(quotes => (
+                  <CardQuotes key={quotes.id} quotes={quotes} />
                 ))
               ) : (
                 <p>loading...</p>
               )}
             </Row>
+            <Button
+              floating
+              large
+              className="blue"
+              waves="light"
+              icon="add"
+              onClick={() => this.handleNewQuotes()}
+            />
           </Container>
         </div>
       </div>
