@@ -8,8 +8,12 @@ class CardQuotes extends Component {
 		return (
 			<Col m={4} s={12}>
 				<Card className="small" textClassName="black-text align-left">
-					<div className="card-image">
-						<img src={logoNovatics} alt="foto-bonita" />
+					<div className="card-image-override">
+						<img
+							src={logoNovatics}
+							alt="foto-bonita"
+							className="image-override"
+						/>
 					</div>
 					<div className="card-title">{this.props.quotes.user}</div>
 

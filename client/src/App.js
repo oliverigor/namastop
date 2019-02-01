@@ -3,7 +3,7 @@ import logoNovatics from "./Marca_Novatics_negativo.png";
 import { Container, Row, Button } from "react-materialize";
 import "./App.css";
 import jsonData from "./quotes";
-import firebase from "./firebase";
+import "./bubbleloading.css";
 
 import CardQuotes from "./CardQuotes";
 
@@ -20,36 +20,10 @@ class App extends Component {
     this.callApi()
       .then(res => this.setState({ response: res.express }))
       .catch(err => console.log(err));
-
-    const oldPosts = firebase.database().ref("post");
-    oldPosts.on(
-      "value",
-      snapshot => {
-        let newState = [];
-        var oldPosts = snapshot.val();
-        for (let i in oldPosts) {
-          oldPosts[i].map(aqui => {
-            newState.push({
-              id: aqui.id,
-              message: aqui.message,
-              user: aqui.user
-            });
-            return this.setState({
-              posts: newState,
-              dataAPI: newState
-            });
-          });
-        }
-      },
-      function(error) {
-        console.log("Error: " + error.code);
-      }
-    );
-    // console.log({ oldPosts: oldPosts });
   }
 
   callApi = async () => {
-    const response = await fetch("/api/hello");
+    const response = await fetch("/api/posts");
     const body = await response.json();
 
     if (response.status !== 200) throw Error(body.message);
@@ -59,22 +33,22 @@ class App extends Component {
 
   handleNewQuotes = async () => {
     console.log("entrei aqui");
-    const response = await fetch("/api/hello", {
+    const response = await fetch("/api/posts", {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
       }
-      // body: JSON.stringify({ posts: this.state.posts })
     });
     const body = await response.text();
+    console.log({ body: body });
 
     this.setState({ dataAPI: JSON.parse(body) });
-    const post = this.state.dataAPI;
-    const itemsRef = firebase.database().ref("post");
-    itemsRef.push(post);
+
+    // const post = this.state.dataAPI;
   };
 
   render() {
+    console.log(this.state.dataAPI);
     return (
       <div className="App">
         <header className="App-header">
@@ -82,19 +56,6 @@ class App extends Component {
             <img src={logoNovatics} alt="logo" height={30} />
           </div>
         </header>
-        {/*<p>{this.state.response}</p>
-        <form onSubmit={this.handleSubmit}>
-          <p>
-            <strong>Post to Server:</strong>
-          </p>
-          <input
-            type="text"
-            value={this.state.post}
-            onChange={e => this.setState({ post: e.target.value })}
-          />
-          <button type="submit">Submit</button>
-        </form>
-        <p>{this.state.responseToPost}</p>*/}
         <div className="container-main">
           <Container>
             <Row>
@@ -103,6 +64,16 @@ class App extends Component {
                   <CardQuotes key={quotes.id} quotes={quotes} />
                 ))
               ) : (
+                // <div class="container-bubble">
+                //   <div class="circle circle1" />
+                //   <div class="circle circle2" />
+                //   <div class="circle circle3" />
+                //   <div class="circle big" />
+                //   <div class="circle circle4" />
+                //   <div class="circle circle5" />
+                //   <div class="circle circle6" />
+                //   <div class="circle circle7" />
+                // </div>
                 <p>loading...</p>
               )}
             </Row>
