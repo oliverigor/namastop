@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Card, Col } from "react-materialize";
 import "./App.css";
-import logoNovatics from "../images/Marca_Novatics_negativo.png";
+import userPhoto from "../images/pikachu.jpg";
 
 class CardQuotes extends Component {
 	render() {
@@ -10,7 +10,7 @@ class CardQuotes extends Component {
 				<Card className="small" textClassName="black-text align-left">
 					<div className="card-image-override">
 						<img
-							src={logoNovatics}
+							src={userPhoto}
 							alt="foto-bonita"
 							className="image-override"
 						/>
@@ -19,7 +19,9 @@ class CardQuotes extends Component {
 
 					<div className="card-stacked">
 						<div className="card-content">
-							<p>{this.props.quotes.message}</p>
+							<p className="message-text">
+								{this.props.quotes.message}
+							</p>
 						</div>
 					</div>
 				</Card>

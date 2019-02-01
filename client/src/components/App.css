@@ -35,3 +35,8 @@
   width: 100px;
   height: 100px;
 }
+
+.message-text {
+  font-style: italic;
+  color: #35383c;
+}
