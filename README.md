@@ -1,6 +1,6 @@
 # Namastop
 
-> Example on using create-react-app with a Node Express Backend
+> Awesome web app using NODE and create-react-app
 
 ## Usage
 
@@ -34,18 +34,17 @@ NODE_ENV=production yarn dev:server
 
 Help us improve this amazing system! Some features that could be implemented in future work:
 
-Real time update
+####Real time update
 Use a firebase function for update news namastops in real time
 
-```
-Filter system
+####Filter system
 Filter the messages by author and by channel
-```
 
-Interaction with bot
+####Interaction with bot
 Create an interaction with the namastop bot
 
-```
-Improve tests
+####Improve tests
 Tests are never enough.
-```
+
+####Get users information
+Get the photo and other informations for dispay on screen
